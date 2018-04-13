@@ -6,14 +6,16 @@ HunterGate(
     SHA1 "57d07480686f82ddc916a5980b4f2a18e5954c2b"
 )
 
-project(matrix)
+project(queue_t)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 option(BUILD_TESTS "Build tests" OFF)
 option(BUILD_EXAMPLES "Build Examples" OFF)
 
-add_library(${PROJECT_NAME} "${PROJECT_SOURCE_DIR}/sources/matrix.cpp")
+add_library(${PROJECT_NAME} "${PROJECT_SOURCE_DIR}/include/queue_t.hpp" )
+add_executable(mainfile "${PROJECT_SOURCE_DIR}/sources/queue.cpp")
+target_link_libraries(mainfile ${PROJECT_NAME})
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include/)
 
 if(BUILD_TESTS)
