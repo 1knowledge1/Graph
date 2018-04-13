@@ -1,6 +1,6 @@
 #include <catch.hpp>
 #include <sstream>
-#include "queue_t.hpp"
+#include "queue_t.cpp"
 
 TEST_CASE("pop/push")
 {

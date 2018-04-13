@@ -1,4 +1,4 @@
-#include "queue_t.hpp"
+#include "queue_t.cpp"
 int main()
 {
 	queue_t<int> que;
