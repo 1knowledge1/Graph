@@ -42,14 +42,15 @@ private:
 				if (left) {
 					return left->find_t(val);
 				}
-				else return false;
-			}
+					else return false;
+				}
 			if (value < val) {
 				if (right) {
 					return right->find_t(val);
 				}
 				else return false;
 			}
+			return false;
 		}
 		void print_t(std::ostream & stream, int num = 0) const {
 			if (right) {
@@ -167,6 +168,7 @@ private:
 					value = min_val->value;
 					return right->remove_t(value);
 				}
+				return false;
 			}
 		}
 	};
@@ -242,6 +244,7 @@ public:
 			{
 				return root_->remove_t(key);
 			}
+			return false;
 		}
 		else
 		{
