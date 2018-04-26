@@ -1,24 +1,40 @@
 #include <iostream>
-
 #include "tree_t.hpp"
 
 int main() {
-	tree_t<int> tree1, tree2;
-	tree1.insert(3);
-	tree1.insert(2);
-	tree1.insert(1);
-	tree1.insert(0);
-
-	tree2.insert(3);
-	tree2.insert(2);
-	tree2.insert(1);
-	tree2.insert(0);
-	tree2.insert(10);
-	tree1.print(std::cout);
-	std::cout << "\n";
-	tree2.print(std::cout);
-	std::cout << "\n";
-	if (tree1 == tree2) std::cout << "trees =\n";
-	else std::cout << "trees !=\n";
+	tree_t<int> tree;
+	char op;
+	while (std::cin >> op && op != 'q') {
+		int num;
+		switch (op) {
+		case '=':
+			tree.print(std::cout);
+			break;
+		case '+':
+			if (std::cin >> num) {
+				tree.insert(num);
+				tree.print(std::cout);
+			}
+			else {
+				std::cout << "An error has occured while reading input data\n";
+				exit(0);
+			}
+			break;
+		case '?':
+			if (std::cin >> num) {
+				if (tree.find(num)) {
+					std::cout << "true\n";
+				}
+				else {
+					std::cout << "false\n";
+				}
+			}
+			else {
+				std::cout << "An error has occured while reading input data\n";
+				exit(0);
+			}
+			break;
+		}
+	}
 	return 0;
 }

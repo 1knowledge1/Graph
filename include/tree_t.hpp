@@ -87,6 +87,88 @@ private:
 			else return false;
 			return res;
 		}
+		bool remove_t(T key)
+		{
+			if (value > key) 
+			{
+				if (left) 
+				{
+					if (left->value == key && !left->left && !left->right)
+					{
+						delete left;
+						left = nullptr;
+						return true;
+					}
+					else
+					{
+						return left->remove_t(key);
+					}
+				}
+				else return false;
+			}
+
+			if (value < key) 
+			{
+				if (right) 
+				{
+					if (right->value == key && !right->left && !right->right)
+					{
+						delete right;
+						right = nullptr;
+						return true;
+					}
+					else
+					{
+						return right->remove_t(key);
+					}
+				}
+				else return false;
+			}
+
+			if (value == key)
+			{
+				if (left == nullptr && right)
+				{
+					node_t *tmp = right;
+					value = right->value;
+					left = right->left;
+					right = right->right;
+					tmp->left = nullptr;
+					tmp->right = nullptr;
+					delete tmp;
+					return true;
+				}
+				if (right == nullptr && left)
+				{
+					node_t *tmp = left;
+					value = left->value;
+					right = left->right;
+					left = left->left;
+					tmp->left = nullptr;
+					tmp->right = nullptr;
+					delete tmp;
+					return true;
+				}
+				if (left && right)
+				{
+					node_t *min_val = right;
+					if (!min_val->left) 
+					{
+						value = min_val->value;
+						right = min_val->right;
+						min_val->left = nullptr;
+						min_val->right = nullptr;
+						delete min_val;
+						return true;
+					}
+					while (min_val->left) {
+						min_val = min_val->left;
+					}
+					value = min_val->value;
+					return right->remove_t(value);
+				}
+			}
+		}
 	};
 private:
 	node_t * root_;
@@ -94,16 +176,14 @@ public:
 	tree_t() {
 		root_ = nullptr;
 	}
-	~tree_t() {
-		delete root_;
-	}
-	
-	//bool remove(T key);
 	tree_t(std::initializer_list<T> keys) {
 		root_ = nullptr;
 		for (T i : keys) {
 			this->insert(i);
 		}
+	}
+	~tree_t() {
+		delete root_;
 	}
 	auto operator==(tree_t const & other) const {
 		if (!root_ && !other.root_) return true;
@@ -143,5 +223,30 @@ public:
 		}
 		else std::cout << "Tree is empty\n";
 		return;
+	}
+	bool remove(T key)
+	{
+		if (!root_)
+		{
+			std::cout << "Tree is empty.\n";
+			return false;
+		}
+		if (find(key)) {
+			if (!root_->left && !root_->right && root_->value == key) 
+			{
+				delete root_;
+				root_ = nullptr;
+				return true;
+			}
+			if (root_->left || root_->right)
+			{
+				return root_->remove_t(key);
+			}
+		}
+		else
+		{
+			std::cout << "Tree hasn't this value.\n";
+			return false;
+		}
 	}
 };
